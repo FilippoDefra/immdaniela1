@@ -17,7 +17,7 @@ from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from anthropic import Anthropic
 from blog_seeds import BLOG_SEEDS
 
 # MongoDB
@@ -505,7 +505,7 @@ def _chat_session_key(session_id: str) -> str:
 
 @api_router.post("/chat/message", response_model=ChatMessageOut)
 async def chat_message(payload: ChatMessageIn, request: Request):
-    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    api_key = os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("EMERGENT_LLM_KEY")
     if not api_key:
         raise HTTPException(status_code=503, detail="Chat AI non configurata")
 
@@ -515,29 +515,25 @@ async def chat_message(payload: ChatMessageIn, request: Request):
     session = await db.chat_sessions.find_one({"session_id": session_id})
     history = (session.get("messages", []) if session else [])[-12:]
 
-    # Build context-rich prompt that includes prior turns
-    contextual_prompt = payload.message
-    if history:
-        convo = "\n".join(
-            f"{'Utente' if m['role']=='user' else 'Assistente'}: {m['text']}"
-            for m in history
-        )
-        contextual_prompt = (
-            f"Cronologia della conversazione finora:\n{convo}\n\n"
-            f"Nuovo messaggio dell'utente: {payload.message}\n\n"
-            f"Rispondi all'ultimo messaggio dell'utente coerentemente con la cronologia."
-        )
+    # Build messages list for Anthropic SDK
+    messages = []
+    for m in history:
+        role = "user" if m["role"] == "user" else "assistant"
+        messages.append({"role": role, "content": m["text"]})
+    messages.append({"role": "user", "content": payload.message})
 
     now_iso = datetime.now(timezone.utc).isoformat()
     user_msg = {"role": "user", "text": payload.message, "ts": now_iso}
 
     try:
-        chat = LlmChat(
-            api_key=api_key,
-            session_id=_chat_session_key(session_id) + "_" + str(uuid.uuid4()),
-            system_message=CHAT_SYSTEM_PROMPT,
-        ).with_model("anthropic", "claude-sonnet-4-5-20250929")
-        reply = await chat.send_message(UserMessage(text=contextual_prompt))
+        anthropic_client = Anthropic(api_key=api_key)
+        response = anthropic_client.messages.create(
+            model="claude-sonnet-4-5-20250929",
+            max_tokens=2048,
+            system=CHAT_SYSTEM_PROMPT,
+            messages=messages,
+        )
+        reply = response.content[0].text
     except Exception as e:
         logging.exception("LLM call failed")
         raise HTTPException(status_code=502, detail="Servizio chat momentaneamente non disponibile. Riprova tra poco o contattaci direttamente.")
