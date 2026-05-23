@@ -1,0 +1,7 @@
+{
+  "backend/tests/test_blog_chat.py::test_chat_message_creates_session": true,
+  "backend/tests/test_blog_chat.py::test_chat_message_multi_turn": true,
+  "backend/tests/test_blog_chat.py::test_chat_sessions_list_with_auth": true,
+  "backend/tests/test_blog_chat.py::test_chat_session_detail_with_auth": true,
+  "backend/tests/test_blog_chat.py::test_chat_session_delete_with_auth": true
+}

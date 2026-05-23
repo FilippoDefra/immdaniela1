@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" fill="none">
+  <rect width="1200" height="320" fill="#1C1C1C"></rect>
+  <defs>
+    <linearGradient id="lkGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E2C673"></stop>
+      <stop offset="45%" stop-color="#B8860B"></stop>
+      <stop offset="100%" stop-color="#7A5907"></stop>
+    </linearGradient>
+  </defs>
+  <g transform="translate(80,60) scale(1.0)">
+    <use></use>
+  </g>
+  
+  <g transform="translate(80,60)">
+    <svg x="0" y="0" width="200" height="200" viewBox="0 0 200 200">
+      <rect x="80" y="35" width="40" height="80" fill="url(#lkGold)"></rect>
+      <polygon points="100,18 175,60 175,140 100,182 25,140 25,60" fill="url(#lkGold)" stroke="#5A4205" stroke-width="1.5"></polygon>
+      <polygon points="25,60  100,100 25,140" fill="#1C1C1C" opacity=".7"></polygon>
+      <polygon points="100,100 100,182 25,140" fill="#1C1C1C" opacity=".75"></polygon>
+      <polygon points="100,100 175,140 100,182" fill="#1C1C1C" opacity=".5"></polygon>
+      <rect x="86" y="40" width="32" height="62" fill="url(#lkGold)" stroke="#5A4205" stroke-width="1"></rect>
+      <g fill="#1C1C1C" opacity=".55">
+        <rect x="92" y="46" width="6" height="6"></rect>
+        <rect x="106" y="46" width="6" height="6"></rect>
+        <rect x="92" y="58" width="6" height="6"></rect>
+        <rect x="106" y="58" width="6" height="6"></rect>
+        <rect x="92" y="70" width="6" height="6"></rect>
+        <rect x="106" y="70" width="6" height="6"></rect>
+        <rect x="92" y="82" width="6" height="6"></rect>
+        <rect x="106" y="82" width="6" height="6"></rect>
+        <rect x="92" y="94" width="6" height="6"></rect>
+        <rect x="106" y="94" width="6" height="6"></rect>
+      </g>
+      <polygon points="86,40 102,32 118,40" fill="#D2A93A"></polygon>
+    </svg>
+  </g>
+  
+  <g transform="translate(320,0)">
+    <text x="0" y="135" font-family="Cormorant Garamond, Times New Roman, serif" font-size="72" font-weight="600" letter-spacing="6" fill="url(#lkGold)">IMMOBILIARE</text>
+    <text x="0" y="225" font-family="Cormorant Garamond, Times New Roman, serif" font-size="100" font-weight="700" letter-spacing="8" fill="url(#lkGold)">DANIELA</text>
+  </g>
+</svg>

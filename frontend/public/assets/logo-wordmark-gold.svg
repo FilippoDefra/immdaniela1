@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" fill="none">
+  <defs>
+    <linearGradient id="wmGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E2C673"></stop>
+      <stop offset="45%" stop-color="#B8860B"></stop>
+      <stop offset="100%" stop-color="#7A5907"></stop>
+    </linearGradient>
+  </defs>
+  <text x="400" y="78" text-anchor="middle" font-family="Cormorant Garamond, Times New Roman, serif" font-size="68" font-weight="600" letter-spacing="6" fill="url(#wmGold)">IMMOBILIARE</text>
+  <text x="400" y="160" text-anchor="middle" font-family="Cormorant Garamond, Times New Roman, serif" font-size="92" font-weight="700" letter-spacing="8" fill="url(#wmGold)">DANIELA</text>
+</svg>

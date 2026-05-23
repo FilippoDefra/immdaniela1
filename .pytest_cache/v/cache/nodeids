@@ -1,0 +1,18 @@
+[
+  "backend/tests/test_blog_chat.py::test_auth_login_returns_token",
+  "backend/tests/test_blog_chat.py::test_blog_create_duplicate_slug_returns_400",
+  "backend/tests/test_blog_chat.py::test_blog_create_with_admin_auth",
+  "backend/tests/test_blog_chat.py::test_blog_create_without_auth_returns_401",
+  "backend/tests/test_blog_chat.py::test_blog_delete_with_auth",
+  "backend/tests/test_blog_chat.py::test_blog_get_existing_slug_includes_body",
+  "backend/tests/test_blog_chat.py::test_blog_get_nonexistent_slug_returns_404",
+  "backend/tests/test_blog_chat.py::test_blog_list_excludes_body_field",
+  "backend/tests/test_blog_chat.py::test_blog_list_returns_6_seeded",
+  "backend/tests/test_blog_chat.py::test_blog_update_with_auth",
+  "backend/tests/test_blog_chat.py::test_chat_message_creates_session",
+  "backend/tests/test_blog_chat.py::test_chat_message_multi_turn",
+  "backend/tests/test_blog_chat.py::test_chat_session_delete_with_auth",
+  "backend/tests/test_blog_chat.py::test_chat_session_detail_with_auth",
+  "backend/tests/test_blog_chat.py::test_chat_sessions_list_requires_auth",
+  "backend/tests/test_blog_chat.py::test_chat_sessions_list_with_auth"
+]
