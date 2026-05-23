@@ -2,17 +2,15 @@ services:
   - type: web
     name: daniela-immobiliare-api
     runtime: python
-    plan: starter
+    plan: free
     branch: main
-    buildCommand: "pip install -r backend/requirements.txt"
-    startCommand: "cd backend && uvicorn server:app --host 0.0.0.0 --port $PORT"
+    rootDir: backend
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn server:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /api/
     envVars:
       - key: ENV
         value: production
-      - key: HOST
-        value: 0.0.0.0
-      - key: PORT
-        value: 10000
       - key: DB_NAME
         value: daniela_immobiliare
       - key: CORS_ORIGINS
