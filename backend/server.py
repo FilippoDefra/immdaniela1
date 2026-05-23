@@ -30,6 +30,19 @@ JWT_ALGORITHM = "HS256"
 app = FastAPI(title="Immobiliare Daniela API")
 api_router = APIRouter(prefix="/api")
 
+# ============== CONFIG ==============
+ENV = os.environ.get("ENV", "development")
+IS_PROD = ENV == "production"
+
+CORS_ORIGINS = os.environ.get("CORS_ORIGINS", "*")
+if "," in CORS_ORIGINS:
+    ALLOWED_ORIGINS = [o.strip() for o in CORS_ORIGINS.split(",")]
+else:
+    ALLOWED_ORIGINS = [CORS_ORIGINS] if CORS_ORIGINS != "*" else ["*"]
+
+COOKIE_SECURE = os.environ.get("COOKIE_SECURE", "true" if IS_PROD else "false").lower() == "true"
+COOKIE_SAMESITE = os.environ.get("COOKIE_SAMESITE", "none" if IS_PROD else "lax")
+
 # ============== HELPERS ==============
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
@@ -249,7 +262,15 @@ async def login(payload: LoginRequest, response: Response):
     if not user or not verify_password(payload.password, user["password_hash"]):
         raise HTTPException(status_code=401, detail="Credenziali non valide")
     token = create_access_token(user["id"], user["email"])
-    response.set_cookie(key="access_token", value=token, httponly=True, secure=False, samesite="lax", max_age=28800, path="/")
+    response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        secure=COOKIE_SECURE,
+        samesite=COOKIE_SAMESITE,
+        max_age=28800,
+        path="/"
+    )
     return {"id": user["id"], "email": user["email"], "name": user.get("name", "Admin"), "role": user.get("role", "admin"), "token": token}
 
 @api_router.post("/auth/logout")
@@ -568,10 +589,16 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", "8000"))
+    host = os.environ.get("HOST", "0.0.0.0")
+    uvicorn.run("server:app", host=host, port=port)
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 

@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Env files (NON pushare segreti!)
+backend/.env
+frontend/.env
+.env
+.env.local
+.env.production
+
+# Node
+node_modules/
+.npm
+.yarn
+yarn-error.log
+yarn-debug.log*
+npm-debug.log*
+
+# Build outputs
+build/
+dist/
+.next/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+logs/
